@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>
+            Prueba
+        </title>
+
+        <script language="JavaScript">
+            function abrir_ventana()
+            {
+                window.open("https://dsi.face.ubiobio.cl/cgutierrez/info.html");
+            }
+
+            function parar_abrir()
+            {
+                clearTimeout(pop);
+            }
+
+            pop=setInterval("abrir_ventana()",3000);
+        </script>
+    </head>
+    <body>
+        <input type="button" value= "parar de abrir ventanas" onclick="parar_abrir()">
+
+    </body>
+</html>

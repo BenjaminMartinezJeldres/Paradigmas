@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>
+            Prueba
+        </title>
+
+        <script language="JavaScript">
+            function calc()
+            {
+                var argOne=document.getElementById('arg1').value;
+                var argTwo=document.getElementById('arg2').value;
+                var ans=(argOne*argTwo);
+                document.getElementById ('result').innerHTML=argOne+'multiplicado por'+argTwo+'es igual a'+ans;}
+        </script>
+    </head>
+    <body>
+        <div  id="mate"></div>
+        <h4>Hacer una multiplicacion con Javascript </h4>
+        <div class="marco2" style="width:280px;">
+        <input type="text" id="arg1" size="1" >
+        <input type="text" id="arg2" size="1" >
+        </div>
+
+        <did> style="float: left;font-size:20px;padding:4px;margin:6px;" id="result" ></did>
+        <div style="clear:both;"></div>
+        <button type="button"  class="btn tw" onclick="calc()">¡calcular! </button>
+
+    </body>
+
+</html>

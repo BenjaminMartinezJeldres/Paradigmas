@@ -1,0 +1,655 @@
+
+-- Tablas de entidades solo con CLAVE PRIMARIA (PK) --
+
+------Tabla universidad externa ------
+create table Universidad_Externa(
+uex_cod integer PRIMARY KEY,
+uex_nombre varchar2(30),
+uex_ciudad varchar2(30),
+uex_pais varchar2(30)
+);
+--Insercion de datos Universidad Externa--
+INSERT INTO Universidad_Externa Values ('101','Universidad De Concepcion','Concepcion','Chile');
+  ('102','Universidad Del Bio-Bio','Concepcion','Chile'),
+  ('103','Universidad De Chile','Santiago','Chile'),
+ INSERT INTO Universidad_Externa Values ('104','Universidad Viña Del Mar','Viña Del Mar','Chile');
+SELECT * FROM Universidad_Externa
+
+
+
+------ Tabla Facultad ------
+create table Facultad(
+fac_cod integer PRIMARY KEY,
+fac_nombre varchar2(30)
+);
+
+--Insercion de datos Facultad--
+INSERT INTO Facultad Values ('212','Ingenieria');
+('213','Medicina'),
+('214','Ciencias');
+SELECT * FROM Facultad
+
+
+
+------ Tabla Postgrado ------
+create table Tipo_Postgrado(
+tpos_id integer PRIMARY KEY,
+tpos_descripcion varchar2(300)
+);
+--Insercion de datos Tipo_Postgrado--
+INSERT INTO Tipo_Postgrado Values ('301','Doctorado');
+ ('302','Magister Academico'),
+ ('303','Magister Profesional');
+SELECT * FROM Tipo_Postgrado
+
+
+------ Tabla Empleador ------
+create table Empleador(
+emp_rut varchar2 (12) PRIMARY KEY,
+emp_nombres varchar2(70),
+emp_apellidos varchar2(70),
+emp_correo_electronico varchar2(50),
+emp_telefono varchar2 (15)
+);
+--Insercion de datos Empleador--
+INSERT INTO Empleador Values ('14.907.804-5','Eli ELizabeth','Diaz Cid','eli.diaz@gmail.com','+56912923428');
+('15.774.498-2','Lupe Ariana','Valdez Navarro','lupesita324@gmail.com','+56974452314'),
+('13.846.442-k','Javiera Micaela','Alarcon Muñoz','javieralarconm31@gmail.com','+56992087821');
+SELECT * FROM Empleador
+
+------ Tabla Empresa ------
+create table Empresa(
+empr_cod integer PRIMARY KEY,
+empr_nombre varchar2(50),
+empr_giro varchar2(70),
+empr_telefono varchar2(15)
+);
+--Insercion de datos Empresa--
+INSERT INTO Empresa Values ('763290727','RESITER','Transporte, Almacenamiento y Telecomunicaciones','41-5988390');
+  ('616070010','HOSPITAL CLINICO HERMINDA MARTIN','Servicios Sociales y de Salud','42-2586400'),
+                           ('612020000','CIENCIA XXI','CIENCIAS FISICAS','41-2852175');
+SELECT * FROM Empresa
+
+------ Tabla Estado ------
+create table Estado(
+esta_id integer PRIMARY KEY,
+esta_descripcion varchar2(300)
+);
+-- Insercion de Datos Estado--
+INSERT INTO Estado Values ('10','Regular');
+ ('11','Retiro Temporal'),
+ ('12','Retiro Definido'),
+ ('13','Eliminado'),
+ ('14','Tesista'),
+ ('15','Perdida de Programa'),
+ ('16','Graduado');
+SELECT * FROM Estado
+
+
+------ Tabla Publicación ------
+create table Publicacion(
+pub_cod integer PRIMARY KEY,
+pub_nombre varchar2(150)
+);
+--Insercion de datos Publicacion--
+INSERT INTO Publicacion Values ('401','La IA en conjunto con medicina');
+                               ('402','El revolucionario nuevo estudio de la fisica'),
+  ('403','Las nuevas tecnologias impartidas en la informatica'),
+  ('404','La ciencia natural del universo'),
+  ('405','Nuevas energias del siglo XXI'),
+  ('406','El poder de la ciencia'),
+  ('407','La salud en latinoamerica'),
+  ('408','Avances tecnologicos en la medicina'),
+  ('409','La fisica y quimica como una sola'),
+  ('410','El impacto de la tecnologia en el mundo');
+SELECT * FROM Publicacion
+
+
+------ Tabla Revista ------
+create table Revista(
+rev_cod integer PRIMARY KEY,
+rev_nombre_revista varchar2(100),
+rev_descripcion varchar2(100)
+);
+--Insercion de datos Revista--
+INSERT INTO Revista VALUES ('511','SciELO','Des_Rev3050.');
+  ('512','Revista Medica de Chile','Des_Rev3051.'),
+  ('513','Revista Chilena de Rehabilitación y Actividad Física','Des_Rev3052');
+SELECT * FROM Revista
+
+------ Tabla Región ------
+create table Region(
+re_id integer PRIMARY KEY,
+re_descripcion varchar2(50)
+);
+--Insercion de datos Region--
+INSERT INTO Region Values ('1','Bio-Bio');
+ ('2','Valparaiso)
+ ('3','Region Metropolitana');
+SELECT * FROM Region                          
+ 
+------ Tabla Asignatura ------
+create table Asignatura(
+asi_cod integer PRIMARY KEY,
+asi_nombre varchar2(50),
+asi_semestre integer
+);
+--Insercion de datos Asignatura--
+INSERT INTO Asignatura Values ('601','Analisis para Computacion e Informatica','3'),
+ ('602','Web Semantica','3'),
+ ('603','Seminario de Tesis I','4'), -- Facultad Ingenieria -- Magister en Ciencias de la Ingenieria Informatica --
+                              ('604','Etica, Legislacion y Salud','3'),
+ ('605','Economia de la Salud','3'),
+ ('606','Tesis I','4'), -- Facultad de Medicina -- Magister en Educacion Medica y Ciencias de la Salud --
+ ('607','Asignatura de Especialidad IV','3'),
+ ('608','Topicos Especiales II','3'),
+ ('609','Tesis','4'); -- Facultad de Ciencias -- Doctorado en Ciencias Fisicas --
+SELECT * FROM Asignatura                            
+DELETE FROM Asignatura
+-- Tablas de Entidades con CLAVE PRIMARIA Y FORÁNEA (PK,FK) --
+
+------ Tabla Ciudad ------
+create table Ciudad(
+ciu_id integer PRIMARY KEY,
+ciu_descripcion varchar2 (300),
+re_id integer,
+FOREIGN KEY (re_id) REFERENCES Region
+);
+--Insercion de datos Ciudad--
+INSERT INTO Ciudad Values ('701','Concepcion','1');
+ ('702','Santiago','3'),
+ ('703','Viña Del mar','2');
+SELECT * FROM Ciudad                        
+
+------Tabla Estudiante------
+create table Estudiante(
+est_rut varchar2 (12) PRIMARY KEY,
+est_nombre varchar2 (50),
+est_apellido varchar2 (50),
+est_fecha_nac date,
+est_email varchar2 (50),
+est_titulo varchar2 (50),
+est_año_tit date,
+est_direccion varchar2 (50),
+uex_cod integer,
+ciu_id integer,
+FOREIGN KEY (uex_cod) REFERENCES Universidad_Externa,
+FOREIGN KEY (ciu_id) REFERENCES Ciudad
+);
+--Insercion de datos tabla Estudiante--
+INSERT INTO Estudiante VALUES ('17.003.687-5','Jorge Elias','Perez Cura','11-01-1991','jorgeelias.perez@alumnos.udec.cl','Licenciado en Ing Informatica','20/12/2018','Camilo Henriquez 222','101','701'),
+                              ('17.332.767-7','Antonio Isaac','Saez Araneda','07-02-1991','antonioisaac.saez@alumnos.udec.cl','magister profesional de Medicina','20/12/2019','Psje Caupolican 34','101','701'),
+                              ('19.221.141-3','Cristina Ignacia','Neira Neira','14-01-1998','cristinaneira.neira@alumnos.ubiobio.cl','Magister profecional en fisica','20/12/2018','Lincoyan 12','102','701'),
+                              ('16.311.380-3','Ambar Isabel','Gonzales Gonzales','13-03-1989','ambar.gonzales2001@alumnos.ubiobio.cl','Licenciado en Ing Informatica','20/12/2019','Psje Bicentenario 321','102','701'),
+                              ('18.313.363-2','Daniela Yasmin','Aranda Marin','24-02-1992','danielayasmin.aranda@usach.cl','magister profesional de Medicina','20/12/2019','Yungay 524','103','702'),
+ ('19.317.642-9','Victor Manuel','Vergara Monsalve','01-10-1999','victormanuel.vergara@usach.cl','Magister profecional en fisica','20/12/2020','Lautaro 546','103','702'),
+                              ('19.961.752-4','Maria Ignacia','Loyola Vasquez','22-06-1998','mariaignacia.loyola@alumnos.uvdm.cl','Licenciado en Ing Informatica','20/12/2020','Playa ancha 22','104','703'),
+ ('19.252.882.2','Marta Elena','Iturra Saez','12-09-1998','martaelena.iturra@alumnos.uvdm.cl','magister profesional de Medicina','20/12/2018','Llacolen 221','104','703');
+SELECT * FROM Estudiante
+
+--Tabla Departamento--
+create table  Departamento(
+dep_cod integer PRIMARY KEY,
+dep_nombre varchar2(50),
+fac_cod integer,
+FOREIGN KEY (fac_cod) REFERENCES Facultad
+);
+drop table departamento cascade constraints
+--Insercion de datos Departamento--
+INSERT INTO Departamento VALUES ('801','Departamento de Ingenieria Informatica','212');
+                                ('802','Departamento de Ciencias de la Computacion','212'),
+('803','Departamento de Medicina y Salud Publica','213'),
+('804','Departamento de Economia de salud','213'),
+('805','Departamento de Fisica','214'),
+('806','Departamento de Fisiologia','214');
+SELECT * FROM Departamento
+
+
+--Tabla Academico--
+create table Academico(
+aca_rut varchar2 (12) PRIMARY KEY,
+aca_nombres varchar2(50),
+aca_apellidos varchar2(50),
+aca_fecha_nac date,
+aca_email varchar2(50),
+aca_anexo varchar2(50),
+dep_cod integer,
+FOREIGN KEY (dep_cod) REFERENCES Departamento
+);
+---- Insercion de datos Academico----
+INSERT INTO Academico VALUES ('11.221.322-2','Nicolas Emilio','Caceres Aroca','01-01-1970','ncaceres@ubiobio.cl','ncaceres_Anexo','801');
+('11.677.882-3','Juan Carlos','Baeza Alvarez','19-06-1970','jbaeza@ubiobio.cl','jbaeza_Anexo','802'),
+('12.394.019-9','Juan Francisco','Pino Carrera','19-06-1971','jpino@ubiobio.cl','jpino_Anexo','803'),
+('12.344.019-1','Nathalia Zulema','San Martin Cortes','12-04-1971','nsanmartin@ubiobio.cl','nsanmartin_Anexo','804'),
+('10.628.856-9','Veronica Isabel','Poo Valdes','20-04-1969','vpoo@ubiobio.cl','vpoo_Anexo','805'),
+('10.307.775-3','Ana Del Carmen','Troncoso Garin','07-01-1969','atroncoso@ubiobio.cl','atroncoso_Anexo','806'),
+('11.312.103-3','Nancy Del Carmen','Jauregui Toledo','26-02-1970','njauregui@ubiobio.cl','njauregui_Anexo','801'),
+('14.079.754-5','Luis Fabian','Llancafilo Llancafilo','10-10-1981','lullancafilo@ubiobio.cl','lullancafilo_Anexo','803');
+SELECT * FROM Academico
+
+--Tabla Grado--
+create table Grado(
+gra_cod integer PRIMARY KEY,
+gra_tipo varchar2(50),
+gra_nombre varchar2 (50),
+uex_cod integer,
+FOREIGN KEY (uex_cod) REFERENCES Universidad_Externa
+);
+-- Insercion de datos tabla Grado--
+INSERT INTO Grado VALUES   ('901','Doctorado','Doctorado en Ciencias de la Computacion','101');
+                           ('902','Magister Academico','Magister academico en Medicina','102'),
+                           ('903','Magister Profesional','Magister profesional en Fisica','103');
+SELECT * FROM Grado
+
+--Tabla Programa--
+create table Programa(
+pos_cod integer PRIMARY KEY,
+pos_nombre varchar2(50),
+pos_año_inicio integer,
+fac_cod integer,
+FOREIGN KEY (fac_cod) REFERENCES Facultad
+);
+-- Insercion de datos Tabla programa--
+INSERT INTO Programa VALUES ('1101','Magister en Ingenieria Informatica','2021','212');
+   ('1102','Magister en Medica y Ciencias de la Salud','2021','213'),
+   ('1103','Doctorado en Ciencias Fisicas','2021','214');
+SELECT * FROM Programa
+
+--Tabla Articulo--
+create table Articulo(
+pub_cod integer PRIMARY KEY,
+art_volumen varchar2(50),
+art_num_pagina integer,
+rev_cod integer,
+FOREIGN KEY (pub_cod) REFERENCES Publicacion,
+FOREIGN KEY (rev_cod) REFERENCES Revista
+);
+--- Insercion de datos Articulo ---
+INSERT INTO Articulo VALUES ('401','1','112','511');
+   ('407','2','220','512'),
+   ('404','3','79','513');
+SELECT * FROM Articulo
+
+--Tabla ArticuloConf--
+create table ArticuloConf(
+pub_cod integer PRIMARY KEY,
+artconf_acta varchar2(50),
+artconf_num_pag integer,
+artconf_ciudad varchar2(50),
+artconf_pais varchar2(50),
+artconf_fecha_inicio date,
+artconf_fecha_fin date,
+FOREIGN KEY (pub_cod) REFERENCES Publicacion
+);
+
+--- Insercion de datos Articulo ---
+INSERT INTO ArticuloConf VALUES ('402','ArticuloConf1','120','Concepcion','Chile','10/01/2020','10/09/2021');
+   ('403','ArticuloConf2','212','Concepcion','Chile','01/02/2020','01/10/2021'),
+                                ('405','ArticuloConf3','199','Concepcion','Chile','13/08/2021','12/12/2021'),
+   ('406','ArticuloConf4','190','Concepcion','Chile','13/08/2021','13/12/2021');
+SELECT * FROM ArticuloConf  
+ 
+--Tabla Co_guia--
+create table Co_guia(
+pub_cod integer,
+aca_rut varchar2 (12),
+PRIMARY KEY(pub_cod,aca_rut),
+FOREIGN KEY (pub_cod) REFERENCES Publicacion,
+FOREIGN KEY (aca_rut) REFERENCES Academico
+);
+--- Insercion de datos Co_guia ---
+INSERT INTO Co_Guia VALUES ('408','12.394.019-9');
+                           ('409','10.628.856-9');
+SELECT * FROM Co_Guia
+
+--Tabla Tesis--
+create table Tesis(
+pub_cod integer PRIMARY KEY,
+tes_fecha date,
+aca_rut_guia varchar2 (12),
+FOREIGN KEY (aca_rut_guia) REFERENCES Academico
+);
+INSERT INTO Tesis VALUES ('408','01/12/2022','11.221.322-2');
+                         ('409','01/12/2022','12.344.019-1'),
+                         ('410','01/12/2022','10.307.775-3');
+SELECT * FROM Tesis
+
+--Relaciones--
+--Tabla tiene--
+create table Tiene(
+gra_cod integer,
+aca_rut varchar2 (12),
+fecha_obtencion date,
+PRIMARY KEY(gra_cod,aca_rut),
+FOREIGN KEY (gra_cod) REFERENCES Grado,
+FOREIGN KEY (aca_rut) REFERENCES Academico
+);
+---Insercion de Datos Tiene---
+INSERT INTO Tiene VALUES ('901','11.221.322-2','20/12/2000');
+                         ('902','11.677.882-3','12/12/2000'),
+                         ('903','12.394.019-9','12/12/2001'),
+                         ('901','12.344.019-1','12/12/2002'),
+                         ('902','10.628.856-9','12/12/1999'),
+                         ('903','10.307.775-3','28/12/1999'),
+                         ('901','11.312.103-3','21/12/2002'),
+                         ('902','14.079.754-5','12/12/2005');
+SELECT * FROM Tiene                    
+                         
+--Tabla Dirige--
+create table Dirige(
+aca_rut varchar2 (12),
+pos_cod integer,
+PRIMARY KEY (aca_rut,pos_cod),
+FOREIGN KEY (aca_rut) REFERENCES Academico,
+FOREIGN KEY (pos_cod) REFERENCES Programa
+);
+
+INSERT INTO Dirige VALUES ('11.221.322-2','1101');
+                          ('12.394.019-9','1102'),
+                          ('10.628.856-9','1103');
+SELECT * FROM Dirige
+
+--Tabla Clasifica--
+create table Clasifica(
+tpos_id integer,
+pos_cod integer,
+fecha_inicio date,
+fecha_termino date,
+PRIMARY KEY (tpos_id,pos_cod),
+FOREIGN KEY (tpos_id) REFERENCES Tipo_Postgrado,
+FOREIGN KEY (pos_cod) REFERENCES Programa
+);
+
+---Insercion de datos tabla Clasifica---
+INSERT INTO Clasifica VALUES ('301','1101','07/03/2020','07/12/2022');
+                             ('302','1102','07/03/2020','07/12/2022'),
+                             ('303','1103','07/03/2020','07/12/2022');
+SELECT * FROM Clasifica
+
+--Tabla Dicta--
+create table Dicta(
+asi_cod integer,
+aca_rut varchar2(12),
+PRIMARY KEY (asi_cod,aca_rut),
+FOREIGN KEY (asi_cod) REFERENCES Asignatura,
+FOREIGN KEY (aca_rut) REFERENCES Academico
+);
+
+---Insercion de datos tabla Dicta---
+INSERT INTO Dicta VALUES ('601','11.221.322-2');
+                         ('602','11.677.882-3'),
+                         ('603','11.312.103-3'),
+                         ('604','12.394.019-9'),
+                         ('605','12.344.019-1'),
+                         ('606','14.079.754-5'),
+                         ('607','10.307.775-3'),
+                         ('608','10.628.856-9'),
+                         ('609','10.628.856-9');
+SELECT * FROM Dicta
+
+--Tabla Asociado--
+create table Asociado(
+aca_rut varchar2(12),
+pos_cod integer,
+rol varchar (30),
+PRIMARY KEY (aca_rut,pos_cod),
+FOREIGN KEY (aca_rut) REFERENCES Academico,
+FOREIGN KEY (pos_cod) REFERENCES Programa
+);
+--- Insercion de Datos Asociado ---
+INSERT INTO Asociado VALUES ('11.221.322-2','1101','Claustro');
+                            ('11.677.882-3','1101','Colaborador'),  
+                            ('12.394.019-9','1102','Colaborador'),
+                            ('12.344.019-1','1102','Claustro'),
+                            ('10.628.856-9','1103','Colaborador'),
+                            ('10.307.775-3','1103','Claustro'),
+                            ('11.312.103-3','1101','Colaborador'),
+                            ('14.079.754-5','1102','Colaborador');
+SELECT * FROM Asociado
+
+--Tabla Matricula--
+create table Matricula(
+est_rut varchar2 (12),
+pos_cod integer,
+PRIMARY KEY (est_rut,pos_cod),
+FOREIGN KEY (est_rut) REFERENCES Estudiante,
+FOREIGN KEY (pos_cod) REFERENCES Programa
+);
+--- Insercion de datos Matricula ---
+INSERT INTO Matricula VALUES  ('17.003.687-5','1101');
+                              ('16.311.380-3','1101'),
+                              ('19.961.752-4','1101'),
+                              ('17.332.767-7','1102'),
+                              ('18.313.363-2','1102'),
+                              ('19.252.882.2','1102'),
+                              ('19.221.141-3','1103'),
+ ('19.317.642-9','1103');
+SELECT * FROM Matricula
+drop table matricula
+--Tabla Tiene_Emp--
+create table Tiene_Emp(
+est_rut varchar2(12),
+emp_rut varchar2(12),
+fecha_inicio date,
+fecha_fin date,
+PRIMARY KEY(est_rut,emp_rut),
+FOREIGN KEY (est_rut) REFERENCES Estudiante,
+FOREIGN KEY (emp_rut) REFERENCES Empleador
+);
+--- Insercion de datos Tabla Tiene_Emp ---
+INSERT INTO Tiene_Emp VALUES ('17.003.687-5','14.907.804-5','01/01/2021','29/12/2022');
+                             ('17.332.767-7','15.774.498-2','02/01/2021','30/12/2022'),
+                             ('19.221.141-3','13.846.442-k','03/01/2021','31/12/2022');
+SELECT * FROM Tiene_Emp
+
+--Tabla Pertenece--
+create table Pertenece(
+empr_cod integer,
+emp_rut varchar2 (12),
+puesto varchar2 (30),
+PRIMARY KEY (empr_cod,emp_rut),
+FOREIGN KEY (empr_cod) REFERENCES Empresa,
+FOREIGN KEY (emp_rut) REFERENCES Empleador
+);
+--- Insercion de Datos Tabla Pertenece ---
+INSERT INTO Pertenece VALUES ('763290727','14.907.804-5','Jefa');
+                             ('616070010','15.774.498-2','Directora'),
+                             ('612020000','13.846.442-k','Supervisora');
+SELECT * FROM Pertenece
+
+--Tabla tiene_estado--
+create table Tiene_estado(
+esta_id integer,
+est_rut varchar2 (12),
+fecha_inicio date,
+fecha_termino date,
+PRIMARY KEY (esta_id,est_rut),
+FOREIGN KEY (esta_id) REFERENCES Estado,
+FOREIGN KEY (est_rut) REFERENCES Estudiante
+);
+--- Insercion de datos tabla Tiene_estado ---
+INSERT INTO Tiene_estado VALUES ('10','17.003.687-5','01/01/2020','01/12/2022');
+                                ('14','17.332.767-7','02/01/2022','02/12/2022'),
+                                ('11','19.221.141-3','03/01/2021','03/12/2021'),
+                                ('14','16.311.380-3','04/01/2022','04/12/2022'),
+                                ('13','18.313.363-2','01/01/0001','01/01/0001'),
+   ('15','19.317.642-9','06/01/2021','06/12/2022'),
+                                ('14','19.961.752-4','07/01/2022','07/12/2022'),
+   ('16','19.252.882.2','08/12/2022','08/12/2022');
+                               
+SELECT * FROM Tiene_estado
+drop table tiene_estado
+
+--Tabla Genera--
+create table Genera(
+pub_cod integer,
+est_rut varchar2(12),
+PRIMARY KEY (pub_cod,est_rut),
+FOREIGN KEY (pub_cod) REFERENCES Publicacion,
+FOREIGN KEY (est_rut) REFERENCES Estudiante
+);
+
+------Insersion de datos tabla Genera------
+INSERT INTO Genera Values ('408','17.332.767-7');
+                          ('409','16.311.380-3'),
+                          ('410','19.961.752-4');
+SELECT * FROM Genera
+
+drop table Inscribe
+
+--Tabla Inscribe--
+create table Inscribe(
+asi_cod  integer,
+est_rut varchar2(12),
+nota number,
+estado varchar2(30),
+PRIMARY KEY(asi_cod,est_rut),
+FOREIGN KEY (asi_cod) REFERENCES Asignatura,
+FOREIGN KEY (est_rut) REFERENCES Estudiante
+);
+
+------Insercion de datos Tabla Inscribe------
+INSERT INTO Inscribe Values ('601','17.003.687-5','3','REPROBADO');
+INSERT INTO Inscribe Values ('602','17.003.687-5','5','APROBADO');
+INSERT INTO Inscribe Values ('603','17.332.767-7','5','APROBADO');
+INSERT INTO Inscribe Values (604,'16.311.380-3',2,'REPROBADO');
+INSERT INTO Inscribe Values ('605','16.311.380-3','5','APROBADO');
+INSERT INTO Inscribe Values ('606','16.311.380-3','6','APROBADO');
+INSERT INTO Inscribe Values ('607','19.961.752-4','2','REPROBADO');
+INSERT INTO Inscribe Values ('608','19.961.752-4','5','APROBADO');
+INSERT INTO Inscribe Values ('609','19.961.752-4','7','APROBADO');
+
+                   INSERT INTO Inscribe Values ('604','19.961.752-4','3','REPROBADO');
+INSERT INTO Inscribe Values (604,'16.311.380-3',2,'APROBADO');
+
+
+create table Region(
+re_id integer PRIMARY KEY,
+re_descripcion varchar2(50)
+);
+--Insercion de datos Region--
+INSERT INTO Region Values ('1','Bio-Bio');
+INSERT INTO Region Values('2','Valparaiso');
+ ('3','Region Metropolitana');
+SELECT * FROM Region 
+
+
+INSERT INTO Ciudad Values ('701','Concepcion','1');
+ ('702','Santiago','3'),
+ INSERT INTO Ciudad Values('703','Viña Del mar','2');
+
+
+
+
+ INSERT INTO Universidad_Externa Values ('104','Universidad Viña Del Mar','Viña Del Mar','Chile');
+
+  INSERT INTO Asignatura Values('604','Etica, Legislacion y Salud','3');
+  INSERT INTO Inscribe Values ('604','19.961.752-4','3','REPROBADO');
+ INSERT INTO Estudiante VALUES('19.961.752-4','Maria Ignacia','Loyola Vasquez','22-06-1998','mariaignacia.loyola@alumnos.uvdm.cl','Licenciado en Ing Informatica','20/12/2020','Playa ancha 22','104','703');
+
+  INSERT INTO Asignatura Values('605','plsql','3'
+  INSERT INTO Inscribe Values ('604','19.961.752-4','3','APROBADO');
+
+
+select * from Inscribe;
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+
+set serveroutput on
+
+30 ptos.) Crear un trigger que debe validar que un estudiante que tenga una nota final
+--inferior a 4,0 su estado debe ser reprobado, de lo contrario, debe ser aprobado. En caso que esto ocurra, se debe cambiar el estado de acuerdo a la nota registrada.
+
+alter trigger nota_final disable;
+
+create or replace trigger nota_final before insert on inscribe
+for each row
+
+declare
+
+begin 
+    if :new.nota >= 4 and :new.estado = 'Reprobado' then
+     :new.estado := 'Aprobado';
+    elsif :new.nota < 4 and :new.estado = 'Aprobado' then
+        :new.estado := 'Reprobado';
+    end if;
+end;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into inscribe values(, 603, rutestudiante,nota
+
+
+create table Asignatura(
+asi_cod integer PRIMARY KEY,
+asi_nombre varchar2(50),
+asi_semestre integer
+);
+--Insercion de datos Asignatura--
+INSERT INTO Asignatura Values ('601','Analisis para Computacion e Informatica','3');
+
+INSERT INTO Asignatura Values  ('602','Web Semantica','3');
+ ('603','Seminario de Tesis I','4'), -- Facultad Ingenieria -- Magister en Ciencias de la Ingenieria Informatica --
+  INSERT INTO Asignatura Values('604','Etica, Legislacion y Salud','3');
+ ('605','Economia de la Salud','3'),
+ ('606','Tesis I','4'), -- Facultad de Medicina -- Magister en Educacion Medica y Ciencias de la Salud --
+ ('607','Asignatura de Especialidad IV','3'),
+ ('608','Topicos Especiales II','3'),
+ ('609','Tesis','4'); -- Facultad de Ciencias -- Doctorado en Ciencias Fisicas --
+ 
+ 
+ select * from Asignatura
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ ------Tabla Estudiante------
+create table Estudiante(
+est_rut varchar2 (12) PRIMARY KEY,
+est_nombre varchar2 (50),
+est_apellido varchar2 (50),
+est_fecha_nac date,
+est_email varchar2 (50),
+est_titulo varchar2 (50),
+est_año_tit date,
+est_direccion varchar2 (50),
+uex_cod integer,
+ciu_id integer,
+FOREIGN KEY (uex_cod) REFERENCES Universidad_Externa,
+FOREIGN KEY (ciu_id) REFERENCES Ciudad
+);
+--Insercion de datos tabla Estudiante--
+INSERT INTO Estudiante VALUES ('17.003.687-5','Jorge Elias','Perez Cura','11-01-1991','jorgeelias.perez@alumnos.udec.cl','Licenciado en Ing Informatica','20/12/2018','Camilo Henriquez 222','101','701'),
+                              ('17.332.767-7','Antonio Isaac','Saez Araneda','07-02-1991','antonioisaac.saez@alumnos.udec.cl','magister profesional de Medicina','20/12/2019','Psje Caupolican 34','101','701'),
+                              ('19.221.141-3','Cristina Ignacia','Neira Neira','14-01-1998','cristinaneira.neira@alumnos.ubiobio.cl','Magister profecional en fisica','20/12/2018','Lincoyan 12','102','701'),
+                              ('16.311.380-3','Ambar Isabel','Gonzales Gonzales','13-03-1989','ambar.gonzales2001@alumnos.ubiobio.cl','Licenciado en Ing Informatica','20/12/2019','Psje Bicentenario 321','102','701'),
+                              ('18.313.363-2','Daniela Yasmin','Aranda Marin','24-02-1992','danielayasmin.aranda@usach.cl','magister profesional de Medicina','20/12/2019','Yungay 524','103','702'),
+ ('19.317.642-9','Victor Manuel','Vergara Monsalve','01-10-1999','victormanuel.vergara@usach.cl','Magister profecional en fisica','20/12/2020','Lautaro 546','103','702'),
+      INSERT INTO Estudiante VALUES('19.961.752-4','Maria Ignacia','Loyola Vasquez','22-06-1998','mariaignacia.loyola@alumnos.uvdm.cl','Licenciado en Ing Informatica','20/12/2020','Playa ancha 22','104','703');
+ ('19.252.882.2','Marta Elena','Iturra Saez','12-09-1998','martaelena.iturra@alumnos.uvdm.cl','magister profesional de Medicina','20/12/2018','Llacolen 221','104','703');
+SELECT * FROM Estudiante
+
+
+
+
+INSERT INTO Asignatura Values ('601','Analisis para Computacion e Informatica','3');
+INSERT INTO Estudiante VALUES ('17.003.687-5','Jorge Elias','Perez Cura','11-01-1991','jorgeelias.perez@alumnos.udec.cl','Licenciado en Ing Informatica','20/12/2018','Camilo Henriquez 222','101','701');
